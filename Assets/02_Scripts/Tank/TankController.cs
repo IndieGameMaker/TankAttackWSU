@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,14 +8,32 @@ public class TankController : MonoBehaviour
     [SerializeField] private InputSystem_Actions _inputAction;
 
     private float v, h;
+    private PhotonView _pv;
+    private Rigidbody _rb;
 
     private void Awake()
     {
         _inputAction = new InputSystem_Actions();
+        _rb = GetComponent<Rigidbody>();
+        _pv = GetComponent<PhotonView>();
+    }
+
+    private void Start()
+    {
+        if (_pv.IsMine)
+        {
+            // TODO: Cinemachine Camera ¿¬°á
+        }
+        else
+        {
+            _rb.isKinematic = true;
+        }
     }
 
     private void OnEnable()
     {
+        if (!_pv.IsMine) return;
+
         _inputAction.Enable();
         _inputAction.Player.Move.performed += OnMove;
         _inputAction.Player.Move.canceled += OnMove;
@@ -22,6 +41,8 @@ public class TankController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!_pv.IsMine) return;
+
         _inputAction.Disable();
         _inputAction.Player.Move.performed -= OnMove;
         _inputAction.Player.Move.canceled -= OnMove;
@@ -51,6 +72,8 @@ public class TankController : MonoBehaviour
 
     private void Update()
     {
+        if (!_pv.IsMine) return;
+
         Move();
     }
 
