@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
+    // dddbb5ad-a4ea-4826-85a3-3e9b0a33deec
+
     // Game Version
     private readonly string _gameVersion = "1.0";
     // Nick Name
@@ -44,10 +46,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 랜덤조인 실패했을 때 호출되는 콜백
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log($"code={returnCode}: {message}");
+        Debug.Log($"랜덤 입장 실패 code={returnCode}: {message}");
 
-        Debug.Log(short.MaxValue);
+        // 룸 속성을 정의
+        RoomOptions ro = new RoomOptions
+        {
+            IsOpen = true,
+            IsVisible = true,
+            MaxPlayers = 20
+        };
+
+        PhotonNetwork.CreateRoom("MyRoom", ro);
     }
 
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("방 생성 완료");
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("방 입장 완료");
+    }
     #endregion
 }
