@@ -13,6 +13,7 @@ public class TankController : MonoBehaviour
     private PhotonView _pv;
     private Rigidbody _rb;
     private CinemachineCamera _camera;
+    public Transform turret;
 
     private void Awake()
     {
@@ -28,7 +29,7 @@ public class TankController : MonoBehaviour
         {
             // Cinemachine Camera ¿¬°á
             _camera.Follow = transform;
-            _camera.LookAt = transform;
+            _camera.LookAt = turret.transform;
         }
         else
         {
