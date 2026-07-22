@@ -17,19 +17,28 @@ public class TankController : MonoBehaviour
     {
         _inputAction.Enable();
         _inputAction.Player.Move.performed += OnMove;
+        _inputAction.Player.Move.canceled += OnMove;
     }
 
     private void OnDisable()
     {
         _inputAction.Disable();
         _inputAction.Player.Move.performed -= OnMove;
+        _inputAction.Player.Move.canceled -= OnMove;
     }
 
     private void OnMove(InputAction.CallbackContext ctx)
     {
-        var move = ctx.ReadValue<Vector2>();
-        v = move.y;
-        h = move.x;
+        if (ctx.phase == InputActionPhase.Performed)
+        {
+            var move = ctx.ReadValue<Vector2>();
+            v = move.y;
+            h = move.x;
+        }
+        else
+        {
+            v = h = 0f;
+        }
     }
 
     [SerializeField] private float speed = 10.0f;
