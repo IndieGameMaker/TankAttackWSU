@@ -32,5 +32,18 @@ public class TankController : MonoBehaviour
         h = move.x;
     }
 
+    [SerializeField] private float speed = 10.0f;
+
+    private void Move()
+    {
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * v);
+        transform.Rotate(Vector3.up * Time.deltaTime * 100.0f * h);
+    }
+
+    private void Update()
+    {
+        Move();
+    }
+
 
 }
