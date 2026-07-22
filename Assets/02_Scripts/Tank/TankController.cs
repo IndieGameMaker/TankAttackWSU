@@ -1,5 +1,7 @@
 using Photon.Pun;
 using System;
+using TMPro.EditorUtilities;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,19 +12,23 @@ public class TankController : MonoBehaviour
     private float v, h;
     private PhotonView _pv;
     private Rigidbody _rb;
+    private CinemachineCamera _camera;
 
     private void Awake()
     {
         _inputAction = new InputSystem_Actions();
         _rb = GetComponent<Rigidbody>();
         _pv = GetComponent<PhotonView>();
+        _camera = GameObject.FindAnyObjectByType<CinemachineCamera>();
     }
 
     private void Start()
     {
         if (_pv.IsMine)
         {
-            // TODO: Cinemachine Camera 연결
+            // Cinemachine Camera 연결
+            _camera.Follow = transform;
+            _camera.LookAt = transform;
         }
         else
         {
