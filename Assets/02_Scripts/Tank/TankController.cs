@@ -5,6 +5,15 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+RPC (Remote Procedure Call) == RMI (Remote Method Invoke) 
+ 
+ 
+ 
+*/
+
+
+
 public class TankController : MonoBehaviour
 {
     [SerializeField] private InputSystem_Actions _inputAction;
@@ -16,6 +25,8 @@ public class TankController : MonoBehaviour
     private CinemachineCamera _camera;
     private GameObject _cannonPrefab;
 
+    private MeshRenderer[] _renderers;
+
     //[SerializeField] private InputActionReference _attackAction;
 
     private void Awake()
@@ -26,6 +37,7 @@ public class TankController : MonoBehaviour
         _camera = GameObject.FindAnyObjectByType<CinemachineCamera>();
 
         _cannonPrefab = Resources.Load<GameObject>("Cannon");
+        _renderers = GetComponentsInChildren<MeshRenderer>();
     }
 
 
@@ -65,6 +77,13 @@ public class TankController : MonoBehaviour
     }
 
     private void OnFire(InputAction.CallbackContext context)
+    {
+        // RPC »£√‚
+        _pv.RPC(nameof(Fire), RpcTarget.AllViaServer, null);
+    }
+
+    [PunRPC]
+    private void Fire()
     {
         var obj = Instantiate(_cannonPrefab, _firePos.position, _firePos.rotation);
         Destroy(obj, 10.0f);
@@ -113,5 +132,33 @@ public class TankController : MonoBehaviour
         Move();
     }
 
+    private float _currHp = 100.0f;
+    private float _maxHp = 100.0f;
 
+    private void OnCollisionEnter(Collision coll)
+    {
+        if (coll.collider.CompareTag("CANNON"))
+        {
+            _currHp -= 20.0f;
+
+            if (_currHp <= 0.0f)
+            {
+                TankDestroy();
+            }
+        }    
+    }
+
+    private void TankDestroy()
+    {
+        // Tank Invisible
+        SetVisible(true);
+    }
+
+    private void SetVisible(bool isVisible)
+    {
+        for (int i=0; i<_renderers.Length; i++)
+        {
+            _renderers[i].enabled = isVisible;
+        }
+    }
 }
