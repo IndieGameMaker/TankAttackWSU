@@ -29,7 +29,8 @@ public class TankController : MonoBehaviour
         {
             // Cinemachine Camera ¿¬°á
             _camera.Follow = transform;
-            _camera.LookAt = turret.transform;
+            _camera.LookAt = transform;
+            _camera.PreviousStateIsValid = false;
         }
         else
         {
