@@ -151,7 +151,7 @@ public class TankController : MonoBehaviour
     private void TankDestroy()
     {
         // Tank Invisible
-        SetVisible(true);
+        SetVisible(false);
     }
 
     private void SetVisible(bool isVisible)
