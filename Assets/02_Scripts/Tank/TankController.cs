@@ -154,15 +154,16 @@ public class TankController : MonoBehaviour
         // Tank Invisible
         SetVisible(false);
 
+        
+        Vector3 newPos = new Vector3(Random.Range(-100, 100), 5.0f, Random.Range(-100, 100));
+        transform.position = newPos;
+
         Invoke(nameof(RespawnTank), 3.0f);
     }
 
     private void RespawnTank()
     {
         _currHp = _maxHp;
-
-        Vector3 newPos = new Vector3(Random.Range(-100, 100), 5.0f, Random.Range(-100, 100));
-        transform.position = newPos;
 
         SetVisible(true);
     }
