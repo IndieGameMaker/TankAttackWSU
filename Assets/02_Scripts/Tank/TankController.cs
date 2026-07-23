@@ -84,6 +84,19 @@ public class TankController : MonoBehaviour
     {
         if (!_pv.IsMine) return;
 
+        // Legacy InputManager
+        if (Input.GetMouseButtonDown(0))
+        {
+            // FireCannon();
+        }
+        // New InputSystem
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            // FireCannon();
+        }
+
+
+
         Move();
     }
 
