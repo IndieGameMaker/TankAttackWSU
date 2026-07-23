@@ -13,7 +13,7 @@ public class TankController : MonoBehaviour
     private PhotonView _pv;
     private Rigidbody _rb;
     private CinemachineCamera _camera;
-    public Transform turret;
+    private GameObject _cannonPrefab;
 
     private void Awake()
     {
@@ -21,6 +21,8 @@ public class TankController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _pv = GetComponent<PhotonView>();
         _camera = GameObject.FindAnyObjectByType<CinemachineCamera>();
+
+        _cannonPrefab = Resources.Load<GameObject>("Cannon");
     }
 
     private void Start()
