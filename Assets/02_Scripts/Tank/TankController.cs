@@ -4,6 +4,7 @@ using TMPro.EditorUtilities;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 /*
 RPC (Remote Procedure Call) == RMI (Remote Method Invoke) 
@@ -152,6 +153,18 @@ public class TankController : MonoBehaviour
     {
         // Tank Invisible
         SetVisible(false);
+
+        Invoke(nameof(RespawnTank), 3.0f);
+    }
+
+    private void RespawnTank()
+    {
+        _currHp = _maxHp;
+
+        Vector3 newPos = new Vector3(Random.Range(-100, 100), 5.0f, Random.Range(-100, 100));
+        transform.position = newPos;
+
+        SetVisible(true);
     }
 
     private void SetVisible(bool isVisible)
