@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using TMPro.EditorUtilities;
 using Unity.Cinemachine;
@@ -80,13 +81,16 @@ public class TankController : MonoBehaviour
     private void OnFire(InputAction.CallbackContext context)
     {
         // RPC 호출
-        _pv.RPC(nameof(Fire), RpcTarget.AllViaServer, null);
+        _pv.RPC(nameof(Fire), RpcTarget.AllViaServer, _pv.Owner.ActorNumber);
     }
 
     [PunRPC]
-    private void Fire()
+    private void Fire(int actorNumber)
     {
         var obj = Instantiate(_cannonPrefab, _firePos.position, _firePos.rotation);
+
+        obj.GetComponent<Cannon>().shooterId = actorNumber; 
+
         Destroy(obj, 10.0f);
     }
 
@@ -142,8 +146,15 @@ public class TankController : MonoBehaviour
         {
             _currHp -= 20.0f;
 
+            // ActorNumber(ShooterID) > NickName
+            int shooterId = coll.gameObject.GetComponent<Cannon>().shooterId;
+            Player shooter = PhotonNetwork.CurrentRoom.GetPlayer(shooterId);
+
             if (_currHp <= 0.0f)
             {
+                string msg = $"<color=green>[{_pv.Owner.NickName}]</color>님은 <color=red>[{shooter.NickName}]</color>에게 살해당했습니다.";
+                Debug.Log(msg);
+                
                 TankDestroy();
             }
         }    

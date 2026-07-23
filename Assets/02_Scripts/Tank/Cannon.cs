@@ -5,6 +5,9 @@ public class Cannon : MonoBehaviour
     [SerializeField] private GameObject _expEffect;
     [SerializeField] private float _speed = 2000.0f;
 
+    // Shooter ID
+    public int shooterId;
+
     private void Start()
     {
         GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * _speed);
