@@ -1,9 +1,18 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class TurretController : MonoBehaviour
 {
     [SerializeField] private InputActionReference _mousePos;
+
+    private PhotonView _pv;
+
+    private void Start()
+    {
+        _pv = transform.root.GetComponent<PhotonView>();
+        this.enabled = _pv.IsMine;
+    }
 
     private void Update()
     {
