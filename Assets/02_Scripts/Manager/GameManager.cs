@@ -19,4 +19,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         string msg = $"{currentRoom.Name} ({currentRoom.PlayerCount}/{currentRoom.MaxPlayers})";
         roomInfo.text = msg;
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        DisplayRoomInfo();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        DisplayRoomInfo();
+    }
 }
