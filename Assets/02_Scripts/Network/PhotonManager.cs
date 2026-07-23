@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    // dddbb5ad-a4ea-4826-85a3-3e9b0a33deec
+    // a1b2a733-b17c-4d01-91d9-54adfce2e00b
 
     // Game Version
     private readonly string _gameVersion = "1.0";

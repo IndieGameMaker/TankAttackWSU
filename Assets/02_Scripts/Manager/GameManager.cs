@@ -2,6 +2,8 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -9,6 +11,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        Vector3 pos = new Vector3(Random.Range(-100, 100), 3.0f, Random.Range(-100, 100));
+
+        PhotonNetwork.Instantiate("Tank", pos, Quaternion.identity, 0);
+
         DisplayRoomInfo();
     }
 
