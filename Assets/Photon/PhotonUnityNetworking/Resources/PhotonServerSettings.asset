@@ -34,12 +34,12 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - ChatMessage
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - ChatMessage
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
