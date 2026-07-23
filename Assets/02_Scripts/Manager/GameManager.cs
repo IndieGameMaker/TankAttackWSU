@@ -8,9 +8,15 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public TextMeshProUGUI roomInfo;
+    public TextMeshProUGUI chatMsgList;
+    public TMP_InputField chatInput;
+
+    private PhotonView _pv;
 
     private void Start()
     {
+        _pv = GetComponent<PhotonView>();
+
         Vector3 pos = new Vector3(Random.Range(-100, 100), 3.0f, Random.Range(-100, 100));
 
         PhotonNetwork.Instantiate("Tank", pos, Quaternion.identity, 0);
@@ -34,5 +40,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         DisplayRoomInfo();
+    }
+
+    private void MessageSend()
+    {
+        // Message
+        string msg = $"<color=green>[{PhotonNetwork.NickName}]</color> {chatInput.text}";
+    }
+
+    [PunRPC]
+    public void ChatMessage(string msg)
+    {
+        chatMsgList.text += msg + "\n";
     }
 }
