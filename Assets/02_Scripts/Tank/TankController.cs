@@ -8,12 +8,15 @@ using UnityEngine.InputSystem;
 public class TankController : MonoBehaviour
 {
     [SerializeField] private InputSystem_Actions _inputAction;
+    [SerializeField] private Transform _firePos;
 
     private float v, h;
     private PhotonView _pv;
     private Rigidbody _rb;
     private CinemachineCamera _camera;
     private GameObject _cannonPrefab;
+
+    //[SerializeField] private InputActionReference _attackAction;
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class TankController : MonoBehaviour
 
         _cannonPrefab = Resources.Load<GameObject>("Cannon");
     }
+
 
     private void Start()
     {
@@ -47,6 +51,7 @@ public class TankController : MonoBehaviour
         _inputAction.Enable();
         _inputAction.Player.Move.performed += OnMove;
         _inputAction.Player.Move.canceled += OnMove;
+        _inputAction.Player.Attack.started += OnFire;
     }
 
     private void OnDisable()
@@ -56,6 +61,13 @@ public class TankController : MonoBehaviour
         _inputAction.Disable();
         _inputAction.Player.Move.performed -= OnMove;
         _inputAction.Player.Move.canceled -= OnMove;
+        _inputAction.Player.Attack.started -= OnFire;
+    }
+
+    private void OnFire(InputAction.CallbackContext context)
+    {
+        var obj = Instantiate(_cannonPrefab, _firePos.position, _firePos.rotation);
+        Destroy(obj, 10.0f);
     }
 
     private void OnMove(InputAction.CallbackContext ctx)
@@ -84,6 +96,7 @@ public class TankController : MonoBehaviour
     {
         if (!_pv.IsMine) return;
 
+        /*
         // Legacy InputManager
         if (Input.GetMouseButtonDown(0))
         {
@@ -94,7 +107,7 @@ public class TankController : MonoBehaviour
         {
             // FireCannon();
         }
-
+        */
 
 
         Move();
