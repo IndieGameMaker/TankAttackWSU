@@ -6,6 +6,7 @@ using TMPro.EditorUtilities;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 /*
@@ -22,6 +23,7 @@ public class TankController : MonoBehaviour
     [SerializeField] private InputSystem_Actions _inputAction;
     [SerializeField] private Transform _firePos;
     [SerializeField] private TextMeshProUGUI _userIdText;
+    [SerializeField] private Image _hpBar;
 
     private float v, h;
     private PhotonView _pv;
@@ -31,7 +33,9 @@ public class TankController : MonoBehaviour
 
     private MeshRenderer[] _renderers;
 
-    //[SerializeField] private InputActionReference _attackAction;
+    private float _currHp = 100.0f;
+    private float _maxHp = 100.0f;
+
 
     private void Awake()
     {
@@ -141,14 +145,15 @@ public class TankController : MonoBehaviour
         Move();
     }
 
-    private float _currHp = 100.0f;
-    private float _maxHp = 100.0f;
+
 
     private void OnCollisionEnter(Collision coll)
     {
         if (coll.collider.CompareTag("CANNON"))
         {
             _currHp -= 20.0f;
+
+            _hpBar.fillAmount = _currHp / _maxHp;
 
             // ActorNumber(ShooterID) > NickName
             int shooterId = coll.gameObject.GetComponent<Cannon>().shooterId;
@@ -179,6 +184,7 @@ public class TankController : MonoBehaviour
     private void RespawnTank()
     {
         _currHp = _maxHp;
+        _hpBar.fillAmount = 1.0f;
 
         SetVisible(true);
     }
