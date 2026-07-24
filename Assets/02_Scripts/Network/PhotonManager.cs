@@ -14,16 +14,22 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // Nick Name
     private string _userId = "Zackiller";
 
-    [Header("UI")]
+    [Header("Login UI")]
     [SerializeField] private TMP_InputField _userIdInput;
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private Button _signUpButton;
     [SerializeField] private Button _logInButton;
     [SerializeField] private Button _randomJoinButton;
-    // 号持失 UI
+
+    [Header("Lobby UI")]
+    [SerializeField] private Button _lobbyButton;
+
+
+    [Header("号持失 UI")]
     [SerializeField] private TMP_InputField _roomNameInput;
     [SerializeField] private Button _createRoomButton;
-    // Canvas Group
+
+    [Header("Canvas Group")]
     [SerializeField] private CanvasGroup _loginCG;
     [SerializeField] private CanvasGroup _inRoomCG;
 
