@@ -20,7 +20,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [SerializeField] private Button _signUpButton;
     [SerializeField] private Button _logInButton;
     [SerializeField] private Button _randomJoinButton;
-
+    // ¹æ»ý¼º UI
+    [SerializeField] private TMP_InputField _roomNameInput;
+    [SerializeField] private Button _createRoomButton;
+    // Canvas Group
     [SerializeField] private CanvasGroup _loginCG;
     [SerializeField] private CanvasGroup _inRoomCG;
 
@@ -44,6 +47,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         base.OnEnable();
         _randomJoinButton.onClick.AddListener(RandomJoinRoom);
+        _createRoomButton.onClick.AddListener(CreateRoom);
+    }
+
+    private void CreateRoom()
+    {
+        RoomOptions ro = new RoomOptions
+        {
+            IsOpen = true, IsVisible = true, MaxPlayers = 10
+        };
+        PhotonNetwork.CreateRoom(_roomNameInput.text, ro);
     }
 
     private void RandomJoinRoom()
