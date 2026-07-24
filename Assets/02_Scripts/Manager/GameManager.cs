@@ -25,11 +25,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         _pv = GetComponent<PhotonView>();
 
-        Vector3 pos = new Vector3(Random.Range(-100, 100), 3.0f, Random.Range(-100, 100));
-
-        // PhotonNetwork.Instantiate("Tank", pos, Quaternion.identity, 0);
-
-        DisplayRoomInfo();
+        // DisplayRoomInfo();
     }
 
     private void DisplayRoomInfo()

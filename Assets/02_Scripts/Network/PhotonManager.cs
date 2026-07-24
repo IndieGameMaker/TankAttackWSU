@@ -21,6 +21,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [SerializeField] private Button _logInButton;
     [SerializeField] private Button _randomJoinButton;
 
+    [SerializeField] private CanvasGroup _loginCG;
+    [SerializeField] private CanvasGroup _inRoomCG;
+
     private void Awake()
     {
         // 접속 정보 설정
@@ -32,10 +35,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
         // 포톤 서버(포톤클라우드) 접속
         PhotonNetwork.ConnectUsingSettings();
+
+        _inRoomCG.alpha = 0.0f;
+        _inRoomCG.interactable = false;
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         _randomJoinButton.onClick.AddListener(RandomJoinRoom);
     }
 
@@ -87,13 +94,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("방 입장 완료");
+        _inRoomCG.alpha = 1.0f;
+        _inRoomCG.interactable = true;
 
-        // 방장만이 새로운 씬을 로딩할 수 있어야 함.
-        //if (PhotonNetwork.IsMasterClient)
-        //{
-        //    // UnityEngine.SceneManagement.SceneManager.LoadScene();
-        //    PhotonNetwork.LoadLevel("BattleField");
-        //}
+        _loginCG.alpha = 0.0f;
+        _loginCG.interactable = false;
 
         PhotonNetwork.Instantiate("Tank", new Vector3(0, 5.0f, 0), Quaternion.identity, 0);
     }
