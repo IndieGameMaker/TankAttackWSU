@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankController
   _firePos: {fileID: 6409025706866310885}
   _userIdText: {fileID: 3672296985542114197}
+  _hpBar: {fileID: 362554394099560886}
   speed: 20
 --- !u!114 &3165201279382207221
 MonoBehaviour:
