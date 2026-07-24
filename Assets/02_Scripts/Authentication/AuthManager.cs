@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class AuthManager : MonoBehaviour
@@ -25,9 +27,41 @@ public class AuthManager : MonoBehaviour
             Debug.Log($"익명 사용자 Id: {AuthenticationService.Instance.PlayerId}");
         };
 
+        AuthenticationService.Instance.SignedOut += () => Debug.Log("로그아웃 완료");
+
         _logInButton.onClick.AddListener(async () => 
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         });
+    }
+
+    // 회원 가입
+    async Task SignUpUser(string userName, string password)
+    {
+        try
+        {
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(userName, password);
+        }
+        catch (AuthenticationException e)
+        {
+            Debug.Log(e.Message);
+        }
+        catch (RequestFailedException e)
+        {
+            Debug.Log(e.Message);
+        }
+    }
+
+
+    // 로그인 처리
+
+
+
+    private void Update()
+    {
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            AuthenticationService.Instance.SignOut();
+        }
     }
 }
