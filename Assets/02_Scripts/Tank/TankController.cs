@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System;
+using TMPro;
 using TMPro.EditorUtilities;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class TankController : MonoBehaviour
 {
     [SerializeField] private InputSystem_Actions _inputAction;
     [SerializeField] private Transform _firePos;
+    [SerializeField] private TextMeshProUGUI _userIdText;
 
     private float v, h;
     private PhotonView _pv;
@@ -56,6 +58,8 @@ public class TankController : MonoBehaviour
         {
             _rb.isKinematic = true;
         }
+
+        _userIdText.text = _pv.Owner.NickName;
     }
 
     private void OnEnable()
