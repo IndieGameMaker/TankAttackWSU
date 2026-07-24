@@ -32,7 +32,22 @@ public class AuthManager : MonoBehaviour
         // Login
         _logInButton.onClick.AddListener(async () => 
         {
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            // 익명 사용자 로그인
+            // await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            try
+            { 
+                // Username & Password 로그인
+                await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(_userIdInput.text, _passwordInput.text);
+                Debug.Log("로그인 성공");
+            }
+            catch (AuthenticationException e)
+            {
+                Debug.Log(e.Message);
+            }
+            catch (RequestFailedException e)
+            {
+                Debug.Log(e.Message);
+            }
         });
 
         // SignUp
