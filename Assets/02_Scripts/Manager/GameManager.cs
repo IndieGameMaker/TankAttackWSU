@@ -7,12 +7,19 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    public static GameManager Instance = null;
+
     public TextMeshProUGUI roomInfo;
     public TextMeshProUGUI chatMsgList;
     public TMP_InputField chatInput;
     public TextMeshProUGUI playerList;
 
     private PhotonView _pv;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public override void OnEnable()
     {
@@ -28,7 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         // DisplayRoomInfo();
     }
 
-    private void DisplayRoomInfo()
+    public void DisplayRoomInfo()
     {
         Room currentRoom = PhotonNetwork.CurrentRoom;
 

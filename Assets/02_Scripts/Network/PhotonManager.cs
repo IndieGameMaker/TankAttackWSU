@@ -114,6 +114,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         _loginCG.interactable = false;
 
         PhotonNetwork.Instantiate("Tank", new Vector3(0, 5.0f, 0), Quaternion.identity, 0);
+
+        GameManager.Instance.DisplayRoomInfo();
     }
     #endregion
 }
