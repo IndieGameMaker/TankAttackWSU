@@ -1,3 +1,5 @@
+using Photon.Pun;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Authentication;
@@ -13,9 +15,15 @@ public class AuthManager : MonoBehaviour
     [SerializeField] private TMP_InputField _passwordInput;
     [SerializeField] private Button _signUpButton;
     [SerializeField] private Button _logInButton;
+    [SerializeField] private List<Button> _networkButtons;
 
     private async void Awake()
     {
+        foreach (var button in _networkButtons)
+        {
+            button.interactable = false;
+        }
+
         UnityServices.Initialized += () => Debug.Log("유니티 서비스 초기화 완료");
 
         // UGS 초기화
@@ -39,6 +47,12 @@ public class AuthManager : MonoBehaviour
                 // Username & Password 로그인
                 await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(_userIdInput.text, _passwordInput.text);
                 Debug.Log("로그인 성공");
+
+                foreach (var button in _networkButtons)
+                {
+                    button.interactable = true;
+                }
+                PhotonNetwork.NickName = _userIdInput.text;
             }
             catch (AuthenticationException e)
             {
