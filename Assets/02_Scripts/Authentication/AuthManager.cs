@@ -16,14 +16,14 @@ public class AuthManager : MonoBehaviour
     {
         UnityServices.Initialized += () => Debug.Log("유니티 서비스 초기화 완료");
 
+        // UGS 초기화
+        await UnityServices.InitializeAsync();
+
         AuthenticationService.Instance.SignedIn += () => 
         {
             Debug.Log("익명 사용자 로그인 성공");
             Debug.Log($"익명 사용자 Id: {AuthenticationService.Instance.PlayerId}");
         };
-
-        // UGS 초기화
-        await UnityServices.InitializeAsync();
 
         _logInButton.onClick.AddListener(async () => 
         {
