@@ -29,18 +29,29 @@ public class AuthManager : MonoBehaviour
 
         AuthenticationService.Instance.SignedOut += () => Debug.Log("로그아웃 완료");
 
+        // Login
         _logInButton.onClick.AddListener(async () => 
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         });
+
+        // SignUp
+        _signUpButton.onClick.AddListener(async () =>
+        {
+            await SignUpUser(_userIdInput.text, _passwordInput.text);
+        });
+
     }
 
     // 회원 가입
+    // 아이디   : 대소문자 구별 없음, 3자 ~ 20자, [. - @] 허용
+    // 비밀번호 : 대소문자 구별, 8자 ~ 30자, 숫자 1, 영문자 대문자 1, 소문자 1, 특수문자 1
     async Task SignUpUser(string userName, string password)
     {
         try
         {
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(userName, password);
+            Debug.Log("회원가입 성공");
         }
         catch (AuthenticationException e)
         {
