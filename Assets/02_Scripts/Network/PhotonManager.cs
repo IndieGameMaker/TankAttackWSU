@@ -1,6 +1,8 @@
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -10,6 +12,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private readonly string _gameVersion = "1.0";
     // Nick Name
     private string _userId = "Zackiller";
+
+    [Header("UI")]
+    [SerializeField] private TMP_InputField _userIdInput;
+    [SerializeField] private TMP_InputField _passwordInput;
+    [SerializeField] private Button _signUpButton;
+    [SerializeField] private Button _logInButton;
+    [SerializeField] private Button _randomJoinButton;
 
     private void Awake()
     {
