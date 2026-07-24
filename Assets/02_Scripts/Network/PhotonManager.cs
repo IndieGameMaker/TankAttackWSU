@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +33,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [Header("Canvas Group")]
     [SerializeField] private CanvasGroup _loginCG;
     [SerializeField] private CanvasGroup _inRoomCG;
+
+    [Header("Room List")]
+    [SerializeField] private GameObject _roomPrefab;
+    [SerializeField] private Transform _contentTr;
 
     private void Awake()
     {
@@ -142,6 +147,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate("Tank", new Vector3(0, 5.0f, 0), Quaternion.identity, 0);
 
         GameManager.Instance.DisplayRoomInfo();
+    }
+
+    // 룸 목록을 저장할 Dictionary 선언
+    private Dictionary<string, GameObject> roomDict = new();// new Dictionary<string, GameObject>();
+
+    // 룸 목록이 변경되면 호출되는 콜백
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        foreach (var room in roomList)
+        {
+            Debug.Log($"{room.Name} : ({room.PlayerCount}/{room.MaxPlayers})");
+        }
     }
     #endregion
 }
