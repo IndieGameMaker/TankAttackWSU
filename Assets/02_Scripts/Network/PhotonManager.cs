@@ -54,6 +54,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         base.OnEnable();
         _randomJoinButton.onClick.AddListener(RandomJoinRoom);
         _createRoomButton.onClick.AddListener(CreateRoom);
+        _lobbyButton.onClick.AddListener(RequestLeaveRoom);
+    }
+
+    private void RequestLeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 
     private void CreateRoom()
@@ -71,6 +77,20 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     }
 
     #region 포톤 콜백
+    public override void OnLeftRoom()
+    {
+        // UI 변경
+        _inRoomCG.alpha = 0.0f;
+        _inRoomCG.interactable = false;
+
+        _loginCG.alpha = 1.0f;
+        _loginCG.interactable = true;
+
+        // Scene Move
+        // UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
+    }
+
+
     // 포톤 서버에 접속했을 때 호출되는 콜백(Callback Method, Callback Function, Event)
     public override void OnConnectedToMaster()
     {

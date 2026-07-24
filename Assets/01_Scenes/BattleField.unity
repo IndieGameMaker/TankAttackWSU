@@ -3979,6 +3979,7 @@ MonoBehaviour:
   _signUpButton: {fileID: 590005011}
   _logInButton: {fileID: 1460856491}
   _randomJoinButton: {fileID: 414968018}
+  _lobbyButton: {fileID: 1636043926}
   _roomNameInput: {fileID: 1602144663}
   _createRoomButton: {fileID: 59503787}
   _loginCG: {fileID: 1519254654}
