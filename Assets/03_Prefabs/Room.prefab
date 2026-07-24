@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7554e25d0f31f489ddcc2c9f9ba398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomData
+  _roomCaption: {fileID: 5961828005067752121}
 --- !u!1 &8115364714888076136
 GameObject:
   m_ObjectHideFlags: 0

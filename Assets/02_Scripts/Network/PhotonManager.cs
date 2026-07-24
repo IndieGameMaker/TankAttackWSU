@@ -158,6 +158,38 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         foreach (var room in roomList)
         {
             Debug.Log($"{room.Name} : ({room.PlayerCount}/{room.MaxPlayers})");
+            // 방이 삭제된 경우 room prefab 삭제
+            if (room.RemovedFromList == true)
+            {
+                if (roomDict.TryGetValue(room.Name, out var tempRoom))
+                {
+                    // 딕셔너리에 저장된 Room Prefab을 삭제
+                    Destroy(tempRoom);
+                    // 딕셔너리의 데이터도 삭제
+                    roomDict.Remove(room.Name);
+                }
+                continue;
+            }
+
+            // 새로 생성된 룸
+            if (roomDict.ContainsKey(room.Name) == false)
+            {
+                // Room 프리팹 생성
+                var _room = Instantiate(_roomPrefab, _contentTr);
+                // 속성 설정
+                _room.GetComponent<RoomData>().RoomInfo = room;
+                // 딕셔너리에 저장
+                roomDict.Add(room.Name, _room);
+            }
+            else
+            {
+                // 룸이 변경된 경우
+                // 딕서너리에서 검색후 교체
+                if (roomDict.TryGetValue(room.Name, out var tempRoom))
+                {
+                    tempRoom.GetComponent<RoomData>().RoomInfo = room;
+                }
+            }
         }
     }
     #endregion
