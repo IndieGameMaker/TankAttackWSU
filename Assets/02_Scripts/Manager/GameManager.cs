@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public TextMeshProUGUI roomInfo;
     public TextMeshProUGUI chatMsgList;
     public TMP_InputField chatInput;
+    public TextMeshProUGUI playerList;
 
     private PhotonView _pv;
 
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         Vector3 pos = new Vector3(Random.Range(-100, 100), 3.0f, Random.Range(-100, 100));
 
-        PhotonNetwork.Instantiate("Tank", pos, Quaternion.identity, 0);
+        // PhotonNetwork.Instantiate("Tank", pos, Quaternion.identity, 0);
 
         DisplayRoomInfo();
     }
@@ -37,6 +38,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         string msg = $"{currentRoom.Name} ({currentRoom.PlayerCount}/{currentRoom.MaxPlayers})";
         roomInfo.text = msg;
+
+        // Player List
+        string playerListStr = "";
+
+        foreach(var player in PhotonNetwork.PlayerList)
+        {
+            string color = (player.IsMasterClient) ? "#ff0000" : "#00ff00";
+            playerListStr += $"<color={color}>{player.NickName}</color>\n";
+        }
+
+        playerList.text = playerListStr;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

@@ -69,12 +69,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("방 입장 완료");
 
         // 방장만이 새로운 씬을 로딩할 수 있어야 함.
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.LoadLevel("BattleField");
-        }
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    // UnityEngine.SceneManagement.SceneManager.LoadScene();
+        //    PhotonNetwork.LoadLevel("BattleField");
+        //}
 
-        // PhotonNetwork.Instantiate("Tank", new Vector3(0, 5.0f, 0), Quaternion.identity, 0);
+        PhotonNetwork.Instantiate("Tank", new Vector3(0, 5.0f, 0), Quaternion.identity, 0);
     }
     #endregion
 }
